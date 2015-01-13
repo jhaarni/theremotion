@@ -1,11 +1,10 @@
 (ns theremotion.core
-  (:require theremotion.leap))
+  (:require theremotion.leap)
+  (:require theremotion.monitor))
 
 (use 'overtone.live)
 
 (use 'overtone.inst.synth)
-
-(use 'theremotion.monitor)
 
 (defn closest-note [freq]
   (let [md (hz->midi freq)
@@ -24,11 +23,14 @@
 
 (def theremin simple-flute)
 
-(defn get-leap-frame []
-  {:freq (+ 50 (rand-int 500)) :vol (* 0.1 (+ 1 (rand-int 10)))})
+(use 'theremotion.leap)
 
 (defn get-leap-parameters [frame]
-  frame)
+  (if (has-both-hands? frame)
+    (let [vol (get-left-y frame)
+          freq (get-right-x frame)]
+      {:vol vol :freq freq})
+    {:vol 0 :freq 0}))
 
 (defn ctl-theremin [freq vol]
   (ctl theremin :freq freq)
@@ -67,10 +69,10 @@
   (future (theremin-loop))
   (show-monitor))
 
-(stop)
-
+;(stop)
 ;(start-theremin)
 ;(stop-theremin)
+
 
 
 

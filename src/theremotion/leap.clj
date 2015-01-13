@@ -1,7 +1,7 @@
 (ns theremotion.leap
   (:import (com.leapmotion.leap Controller Hand HandList Finger FingerList Frame Vector)))
 
-(System/getProperty "java.library.path")
+;(System/getProperty "java.library.path")
 
 (defn wait-for-controller [controller timeout]
   (Thread/sleep 1000)
@@ -16,7 +16,6 @@
     (wait-for-controller controller 10)))
 
 ;(def controller (get-controller))
-
 (def controller (Controller.))
 
 (defn connected? [^Controller controller]
@@ -27,22 +26,45 @@
 (defn get-leap-frame []
   (.frame controller)) 
 
-(defn get-hand-position [hand]
+(defn get-palm-position [^Hand hand]
   (.palmPosition hand))
 
-(defn get-left-hand [frame]
+(defn get-left-hand [^Frame frame]
   (.. frame (hands) (leftmost)))
 
-(defn get-right-hand [frame]
+(defn get-right-hand [^Frame frame]
   (.. frame (hands) (rightmost)))
 
-(defn has-both-hands? [frame]
+(defn has-both-hands? [^Frame frame]
   (= 2 (.. frame (hands) (count))))
 
-(defn get-fingers [hand]
+(defn get-fingers [^Hand hand]
   (.fingers hand))
 
-(defn get-bones [finger])
+(defn tip-position [^Finger finger]
+  (.tipPosition finger))
 
-(defn get-vector [obj])
+(defn get-x [^Vector leap-vector]
+  (.getX leap-vector))
+
+(defn get-y [^Vector leap-vector]
+  (.getY leap-vector))
+
+(defn get-position [fun hand]
+  (let [mid-pos (fun (get-palm-position hand))
+        fingers (get-fingers hand)
+        finger-tips (map tip-position fingers)
+        tip-positions (map fun finger-tips)
+        positions (conj tip-positions mid-pos)]
+    (/ (reduce + positions) (count positions))))
+
+(defn get-left-y [frame]
+  (let [hand (get-left-hand frame)]
+    (get-position get-y hand)))
+
+(defn get-right-x [frame]
+  (let [hand (get-right-hand frame)]
+    (get-position get-x hand)))
+
+
 
