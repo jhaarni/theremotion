@@ -1,28 +1,25 @@
 (ns theremotion.leap
   (:import (com.leapmotion.leap Controller Hand HandList Finger FingerList Frame Vector)))
 
-;(System/getProperty "java.library.path")
+; Overtone and LeapMotion both use native libs, so you gotta put the libs in the same place
+; see project.clj
+; (System/getProperty "java.library.path")
 
-(defn wait-for-controller [controller timeout]
+(defn- wait-for-controller [controller timeout]
   (Thread/sleep 1000)
   (if (> timeout 0)
     (if (not (.isConnected controller))
       (wait-for-controller controller (dec timeout))
       controller)
-    (throw (java.util.concurrent.TimeoutException. "Leap Controller Connect timed out"))))
+    (throw (java.util.concurrent.TimeoutException. "Connection to Leap Controller timed out"))))
 
-(defn get-controller []
+(defn- get-controller []
   (let [cont (Controller.)]
-    (wait-for-controller controller 10)))
+    (wait-for-controller cont 10)))
 
 ;(def controller (get-controller))
 (def controller (Controller.))
-
-(defn connected? [^Controller controller]
-  (.isConnected controller))
-
-;(connected? controller)
-
+ 
 (defn get-leap-frame []
   (.frame controller)) 
 

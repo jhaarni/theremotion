@@ -66,9 +66,6 @@
 ;(show-monitor)
 ;(hide-monitor)
 
-;(set-note-label :Ab2)
-;(set-freq-label 330)
-;(set-err-label 0)
 
 
 

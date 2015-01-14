@@ -1,6 +1,6 @@
 (ns theremotion.core
-  (:require theremotion.leap)
-  (:require theremotion.monitor))
+  (:require [theremotion.leap :refer :all])
+  (:require [theremotion.monitor :refer :all]))
 
 (use 'overtone.live)
 
@@ -23,7 +23,7 @@
 
 (def theremin simple-flute)
 
-(use 'theremotion.leap)
+;(use 'theremotion.leap)
 
 (defn get-leap-parameters [frame]
   (if (has-both-hands? frame)
@@ -72,11 +72,3 @@
 ;(stop)
 ;(start-theremin)
 ;(stop-theremin)
-
-
-
-
-
-
-
-

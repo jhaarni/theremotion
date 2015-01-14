@@ -47,12 +47,6 @@
   2   [quick-kick]
   3   [quick-kick]})
 
-(def danze {
-  0  [dry-kick]
-  1  [dance-kick]
-  2  [dry-kick]
-  3  [dance-kick]})
-
 (def bass-line {
   1   [#(bazz :F#2)]
   3.5 [#(bazz :F#2)]})
@@ -83,13 +77,12 @@
     (player beat)
     (apply-by (m (inc beat))  #'run-sequencer [m])))
 
-(volume 0.5)
+(volume 0.7)
 (run-sequencer metro)
 
 ; *****************
 
 (add-line! four-by-four)
-;(add-line! danze)
 
 (add-line! {0    [open-hat]})
 (add-line! {0.5  [haziti-clap]})
