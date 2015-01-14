@@ -56,7 +56,9 @@
       (set-err (Color/GREEN) "-+-")))) 
 
 (defn show-monitor []
-  (.setVisible monitor-frame true))
+  (.setVisible monitor-frame true)
+  (.toFront monitor-frame)
+  (.repaint monitor-frame))
 
 (defn hide-monitor []
   (.setVisible monitor-frame false))

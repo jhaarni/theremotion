@@ -23,8 +23,6 @@
 
 (def theremin simple-flute)
 
-;(use 'theremotion.leap)
-
 (defn get-leap-parameters [frame]
   (if (has-both-hands? frame)
     (let [vol (get-left-y frame)
