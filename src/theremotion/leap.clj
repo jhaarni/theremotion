@@ -23,28 +23,28 @@
 (defn get-leap-frame []
   (.frame controller)) 
 
-(defn get-palm-position [^Hand hand]
+(defn get-palm-position [hand]
   (.palmPosition hand))
 
-(defn get-left-hand [^Frame frame]
+(defn get-left-hand [frame]
   (.. frame (hands) (leftmost)))
 
-(defn get-right-hand [^Frame frame]
+(defn get-right-hand [frame]
   (.. frame (hands) (rightmost)))
 
-(defn has-both-hands? [^Frame frame]
+(defn has-both-hands? [frame]
   (= 2 (.. frame (hands) (count))))
 
-(defn get-fingers [^Hand hand]
+(defn get-fingers [hand]
   (.fingers hand))
 
-(defn tip-position [^Finger finger]
+(defn tip-position [finger]
   (.tipPosition finger))
 
-(defn get-x [^Vector leap-vector]
+(defn get-x [leap-vector]
   (.getX leap-vector))
 
-(defn get-y [^Vector leap-vector]
+(defn get-y [leap-vector]
   (.getY leap-vector))
 
 (defn get-position [fun hand]
