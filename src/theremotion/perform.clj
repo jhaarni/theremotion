@@ -44,7 +44,7 @@
   1   [#(bazz :F#2)]
   3.5 [#(bazz :F#2)]})
 
-(def metro (metronome 120))
+(def metro (metronome 117))
 
 (metro)
 
@@ -77,6 +77,6 @@
     (Thread/sleep 250)))
 
 (stop)
-(volume 0.5)
+(volume 0.7)
 
 

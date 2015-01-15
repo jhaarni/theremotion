@@ -1,10 +1,5 @@
-(ns theremotion.sequencer)
-
-(use 'overtone.live)
-
-(use 'overtone.inst.drum)
-
-(use 'overtone.inst.synth)
+(ns theremotion.sequencer
+  (:require [overtone.live :refer :all]))
 
 (def bar (atom {}))
 
