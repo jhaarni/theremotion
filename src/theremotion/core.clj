@@ -1,10 +1,8 @@
 (ns theremotion.core
   (:require [theremotion.leap :refer :all])
-  (:require [theremotion.monitor :refer :all]))
-
-(use 'overtone.live)
-
-(use 'overtone.inst.synth)
+  (:require [theremotion.monitor :refer :all])
+  (:require [overtone.live :refer :all])
+  (:require [overtone.inst.synth :refer :all]))
 
 (defn closest-note [freq]
   (let [md (hz->midi freq)
