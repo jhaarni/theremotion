@@ -23,12 +23,17 @@
 
 (def theremin simple-flute)
 
-(def base-freq (ref 131)) ; start from :C2 at zero
+(def base-freq 131) ; start from :C3 at zero. Other possibilities 65->:C2 262->:C4
+
+(defn calc-volume [leap-input]
+  (if (> leap-input 200)
+    1
+    (/ leap-input 200.0)))
 
 (defn get-leap-parameters [frame]
   (if (has-both-hands? frame)
-    (let [vol (/ (get-left-y frame) 10) ; not good, change formula
-          freq (+ @base-freq (get-right-x frame))]
+    (let [vol (calc-volume (get-left-y frame)) 
+          freq (+ base-freq (get-right-x frame))]
       {:vol vol :freq freq})
     {:vol 0 :freq 0}))
 
