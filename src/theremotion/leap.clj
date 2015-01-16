@@ -5,20 +5,23 @@
 ; see project.clj native-path
 ; (System/getProperty "java.library.path")
 
-(defn- wait-for-controller [controller timeout]
-  (Thread/sleep 1000)
+(def controller-wait 100)
+
+(defn- wait-for-controller [controller timeout] ; timeout in milliseconds
   (if (> timeout 0)
     (if (not (.isConnected controller))
-      (wait-for-controller controller (dec timeout))
+      (do
+        (Thread/sleep controller-wait)
+        (wait-for-controller controller (- timeout controller-wait)))
       controller)
     (throw (java.util.concurrent.TimeoutException. "Connection to Leap Controller timed out"))))
 
 (defn- get-controller []
   (let [cont (Controller.)]
-    (wait-for-controller cont 10)))
+    (wait-for-controller cont 5000)))
 
-;(def controller (get-controller))
-(def controller (Controller.))
+(def controller (get-controller))
+;(def controller (Controller.))
  
 (defn get-leap-frame []
   (.frame controller)) 
