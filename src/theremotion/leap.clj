@@ -2,7 +2,7 @@
   (:import (com.leapmotion.leap Controller Hand HandList Finger FingerList Frame Vector)))
 
 ; Overtone and LeapMotion both use native libs, so you gotta put the libs in the same place
-; see project.clj
+; see project.clj native-path
 ; (System/getProperty "java.library.path")
 
 (defn- wait-for-controller [controller timeout]

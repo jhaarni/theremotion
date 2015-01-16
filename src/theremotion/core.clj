@@ -19,12 +19,14 @@
 
 (def loop-active (ref false))
 
+;(def theremin saw-theremin)
+
 (def theremin simple-flute)
 
 (defn get-leap-parameters [frame]
   (if (has-both-hands? frame)
-    (let [vol (get-left-y frame)
-          freq (get-right-x frame)]
+    (let [vol (/ (get-left-y frame) 10)
+          freq (* 3 (get-right-x frame))]
       {:vol vol :freq freq})
     {:vol 0 :freq 0}))
 
@@ -44,7 +46,7 @@
       (ctl-theremin freq vol)
       (set-monitor freq))))
 
-(def sleep-period 200)
+(def sleep-period 100)
 
 (defn theremin-loop []
   (if @loop-active
