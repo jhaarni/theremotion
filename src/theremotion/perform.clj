@@ -67,7 +67,9 @@
 (add-line! {2.5 [#(bazz :F#2)]})
 
 (use 'theremotion.core)
+;(use 'theremotion.leap)
 
+;(start-controller!)
 (start-theremin)
 (stop-theremin)
 
@@ -77,6 +79,4 @@
     (Thread/sleep 250)))
 
 (stop)
-(volume 0.7)
-
-
+(volume 1.0)

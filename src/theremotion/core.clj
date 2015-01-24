@@ -17,23 +17,26 @@
 (definst square-theremin [freq 440]
   (lf-pulse:ar freq))
 
-(def loop-active (ref false))
+(def loop-active (atom false))
 
 ;(def theremin saw-theremin)
 
 (def theremin simple-flute)
 
-(def base-freq 131) ; start from :C3 at zero. Other possibilities 65->:C2 262->:C4
+(def base-freq 131) ; start from :C3 at zero. 65->:C2 262->:C4
 
 (defn calc-volume [leap-input]
   (if (> leap-input 200)
     1
     (/ leap-input 200.0)))
 
-(defn get-leap-parameters [frame]
+(defn calc-frequency [leap-input]
+  (+ base-freq (* 2 leap-input)))
+
+(defn get-theremin-parameters [frame]
   (if (has-both-hands? frame)
     (let [vol (calc-volume (get-left-y frame)) 
-          freq (+ base-freq (get-right-x frame))]
+          freq (calc-frequency (get-right-x frame))]
       {:vol vol :freq freq})
     {:vol 0 :freq 0}))
 
@@ -48,31 +51,37 @@
     (set-err-label err)))
 
 (defn do-theremin []
-  (if-let [frame (get-leap-frame)]
-    (let [{:keys [freq vol]} (get-leap-parameters frame)]
+  (when-let [frame (get-leap-frame)]
+    (debug-frame frame)
+    (let [{:keys [freq vol]} (get-theremin-parameters frame)]
       (ctl-theremin freq vol)
       (set-monitor freq))))
 
-(def sleep-period 100)
+(def fps 50)
+(def sleep-period (/ 1000 fps))
 
-(defn theremin-loop []
-  (if @loop-active
-    (do
-      (future (do-theremin)); should probably wait after sleep just to be sure
-      (Thread/sleep sleep-period)
-      (recur))))
+(defn looper [fun]
+  (when @loop-active
+    (future (fun))
+    (Thread/sleep sleep-period)
+    (recur fun)))
+
 
 (defn stop-theremin []
-  (dosync (ref-set loop-active false))
+  (reset! loop-active false)
   (kill theremin)
   (hide-monitor))
 
 (defn start-theremin []
-  (dosync (ref-set loop-active true))
+  (reset! loop-active true)
   (theremin)
   (ctl-theremin 440 0) ; start quietly
-  (future (theremin-loop))
+  (future (looper do-theremin))
   (show-monitor))
+
+(start-controller!)
+;(enable-gestures [:key_tap])
+
 
 ;(stop)
 ;(start-theremin)
