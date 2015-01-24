@@ -57,7 +57,7 @@
       (ctl-theremin freq vol)
       (set-monitor freq))))
 
-(def fps 50)
+(def fps 100)
 (def sleep-period (/ 1000 fps))
 
 (defn looper [fun]
@@ -65,7 +65,6 @@
     (future (fun))
     (Thread/sleep sleep-period)
     (recur fun)))
-
 
 (defn stop-theremin []
   (reset! loop-active false)
