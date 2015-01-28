@@ -3,7 +3,6 @@
   (:require [theremotion.core :refer :all])
   (:require [overtone.inst.sampled-piano :refer :all])
   (:require [theremotion.leap :refer :all])
-  (:require [overtone.inst.synth :refer [ping]])
   (:import com.leapmotion.leap.KeyTapGesture))
 
 (defn do-da-piano []

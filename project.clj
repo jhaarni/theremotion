@@ -6,6 +6,7 @@
   :dependencies [[org.clojure/clojure "1.5.1"]
   		 [overtone "0.9.1"]]
   :resource-paths ["lib/LeapJava.jar" "resources"]
-  :native-path "native-lib")
+  :native-path "native-lib"
+  :jvm-opts ^:replace [])
 
   

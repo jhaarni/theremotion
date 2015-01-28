@@ -20,13 +20,12 @@
 
 (defmacro enable-gestures [gestures]
   `(do
-     ~@(map (fn [gesture]
-              (let [what (name gesture)
-                    sym  (str "Gesture$Type/TYPE_" (.toUpperCase what))]
-                `(.enableGesture @controller ~(symbol sym))))
-            gestures)))
-
-;(enable-gestures [:key_tap])
+     ~@(map
+        (fn [gesture]
+          (let [what (name gesture)
+                sym  (str "Gesture$Type/TYPE_" (.toUpperCase what))]
+            `(.enableGesture @controller ~(symbol sym))))
+        gestures)))
 
 (defn- get-controller [& opts]
   (let [cont (Controller.)
@@ -47,8 +46,8 @@
 ;(.isGestureEnabled @controller Gesture$Type/TYPE_CIRCLE)
 
 ;(enable-gestures [:key_tap])
-;(.. @controller (config) (setFloat "Gesture.KeyTap.MinDownVelocity" 40.0))
-;(.. @controller (config) (setFloat "Gesture.KeyTap.HistorySeconds" 0.2))
+;(.. @controller (config) (setFloat "Gesture.KeyTap.MinDownVelocity" 30.0))
+;(.. @controller (config) (setFloat "Gesture.KeyTap.HistorySeconds" 0.4))
 
 (defn debug-frame [frame]
   (when (> (.count (.gestures frame)) 0)

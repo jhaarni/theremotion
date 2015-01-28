@@ -79,8 +79,6 @@
   (show-monitor))
 
 (start-controller!)
-;(enable-gestures [:key_tap])
-
 
 ;(stop)
 ;(start-theremin)
