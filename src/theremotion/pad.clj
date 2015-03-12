@@ -55,7 +55,7 @@
             (fun)))))))
 
 (start-controller!)
-;(enable-gestures [:key_tap])
+;(enable-gestures [:screen_tap])
 
 (defn start-pad []
   (reset! loop-active true)

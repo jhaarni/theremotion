@@ -48,6 +48,8 @@
 ;(enable-gestures [:key_tap])
 ;(.. @controller (config) (setFloat "Gesture.KeyTap.MinDownVelocity" 30.0))
 ;(.. @controller (config) (setFloat "Gesture.KeyTap.HistorySeconds" 0.4))
+;(enable-gestures [:screen_tap])
+
 
 (defn debug-frame [frame]
   (when (> (.count (.gestures frame)) 0)
