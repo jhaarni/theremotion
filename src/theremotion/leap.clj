@@ -18,13 +18,13 @@
       controller)
     (throw (java.util.concurrent.TimeoutException. "Connection to Leap Controller timed out"))))
 
-(defmacro enable-gestures [gestures]
-  `(do
+(defmacro enable-gestures [& gestures]
+  `(doto @controller
      ~@(map
         (fn [gesture]
           (let [what (name gesture)
                 sym  (str "Gesture$Type/TYPE_" (.toUpperCase what))]
-            `(.enableGesture @controller ~(symbol sym))))
+            `(.enableGesture ~(symbol sym))))
         gestures)))
 
 (defn- get-controller [& opts]
@@ -42,13 +42,13 @@
     (reset! controller c)))
 
 ;(start-controller!)
-;(enable-gestures [:circle :swipe])
+;(enable-gestures :circle :swipe)
 ;(.isGestureEnabled @controller Gesture$Type/TYPE_CIRCLE)
 
-;(enable-gestures [:key_tap])
+;(enable-gestures :key_tap)
 ;(.. @controller (config) (setFloat "Gesture.KeyTap.MinDownVelocity" 30.0))
 ;(.. @controller (config) (setFloat "Gesture.KeyTap.HistorySeconds" 0.4))
-;(enable-gestures [:screen_tap])
+;(enable-gestures :screen_tap)
 
 
 (defn debug-frame [frame]
@@ -66,7 +66,7 @@
   (.palmPosition hand))
 
 (defn get-left-hand [frame]
-  (.. frame (hands) (leftmost)))
+  (.. frame (hands) (leftmost))) 
 
 (defn get-right-hand [frame]
   (.. frame (hands) (rightmost)))
