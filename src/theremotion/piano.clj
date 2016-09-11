@@ -1,7 +1,7 @@
 (ns theremotion.piano
   (:require [overtone.live :refer :all])
   (:require [theremotion.core :refer :all])
-  (:require [overtone.inst.sampled-piano :refer :all])
+  (:require [overtone.inst.piano :refer :all])
   (:require [theremotion.leap :refer :all])
   (:import com.leapmotion.leap.KeyTapGesture))
 
@@ -13,7 +13,7 @@
              finger (.get pointables 0)
              position (.tipPosition finger)
              x (get-x position)]
-       (sampled-piano (note (hz->midi (+ 262 x))))))))
+       (piano (note (hz->midi (+ 262 x))))))))
 
 (start-controller!)
 ;(enable-gestures [:key_tap])
